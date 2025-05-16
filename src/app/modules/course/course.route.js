@@ -5,7 +5,7 @@ import { courseValidation } from "./courseValidation.js";
 import { verifyToken } from "../jwt/verifyToken.js";
 const router = Router();
 
-router.post('/',verifyToken, courseService.addCourse)
+router.post('/',validationMiddleware(courseValidation.courseSchema),verifyToken, courseService.addCourse)
 
 router.get('/:id', courseService.getCourse)
 router.get('/', courseService.getAllCourse)

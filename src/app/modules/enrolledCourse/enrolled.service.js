@@ -20,8 +20,13 @@ const addEnrolled = catchAsync(async (req,res)=>{
 const getSingleEnrolled = catchAsync(async (req,res)=>{
     try {
         const {userId,courseId} = req.query;
+        console.log(userId,courseId)
         const course = await Enrolled.find({courseId , email : userId});
-        res.json(course);
+        if(course){
+            res.json(course);
+        }
+        
+        
     } catch (error) {
         res.status(500).json({ error: error.message });
     }

@@ -8,7 +8,7 @@ const Lesson = mongoose.model("Lesson", lessonSchema )
 
 const addCourse = catchAsync(async (req,res)=>{
     try {
-        const { name, description, image, category, lessons } = req.body;
+        const { name, description, image, category, lessons ,price } = req.body;
 
     // Step 1: সব lesson আলাদা আলাদা save করো
     const savedLessons = await Lesson.insertMany(lessons);
@@ -17,7 +17,7 @@ const addCourse = catchAsync(async (req,res)=>{
     const lessonIds = savedLessons.map(lesson => lesson._id);
 
     // Step 3: Course save করো lessonIds সহ
-    const newCourse = new Course({ name, description, image, category, lessonIds });
+    const newCourse = new Course({ name, description, image, category, lessonIds, price });
     await newCourse.save();
     res.status(201).json(newCourse)
     } catch (err) {
@@ -33,6 +33,7 @@ const getAllCourse = catchAsync(async (req,res)=>{
         res.status(500).json({ error: error.message });
     }
 })
+
 const getSingleCourse = catchAsync(async (req,res)=>{
     try {
         const {userId,courseId} = req.query;

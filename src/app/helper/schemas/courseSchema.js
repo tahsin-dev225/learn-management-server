@@ -28,7 +28,11 @@ const courseSchema = new mongoose.Schema({
           type: mongoose.Schema.Types.ObjectId,
           ref: "Lesson"
         }
-      ]
+      ],
+    creator : {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+      }
 })
 
 export default courseSchema;
