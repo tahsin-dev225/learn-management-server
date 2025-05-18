@@ -13,4 +13,6 @@ router.get('/dislike', likeService.getDislike)
 router.get('/dislike/:lessonId', likeService.getAllDislike)
 router.delete('/dislike', likeService.removeDislike)
 
+router.delete('/', likeService.deleteAllLike)
+
 export const likeRouter = router;

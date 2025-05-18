@@ -14,6 +14,10 @@ const commentSchema = mongoose.Schema({
         type : mongoose.Schema.Types.ObjectId ,
         ref : 'Lesson', 
         require : true
+    },
+    postedAt: {
+        type: Date,
+        default: Date.now 
     }
 })
 

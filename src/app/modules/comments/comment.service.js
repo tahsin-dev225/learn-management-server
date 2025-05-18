@@ -20,6 +20,17 @@ const addComment = catchAsync(async(req,res)=>{
     }
 })
 
+const deleteAllComment = catchAsync(async (req,res)=>{
+    try {
+        // const id = req.params.id;
+
+        const deleted = await Comment.deleteMany({})
+        res.status(200).json(deleted);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+})
+
 const getComment = catchAsync(async (req,res)=>{
     try {
         const comments = await Comment.find({lessonId : req.params.id}).populate('userId');
@@ -31,5 +42,6 @@ const getComment = catchAsync(async (req,res)=>{
 
 export const commentService = {
     addComment,
-    getComment
+    getComment,
+    deleteAllComment
 }

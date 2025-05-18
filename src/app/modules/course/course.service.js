@@ -8,7 +8,7 @@ const Lesson = mongoose.model("Lesson", lessonSchema )
 
 const addCourse = catchAsync(async (req,res)=>{
     try {
-        const { name, description, image, category, lessons ,price } = req.body;
+        const { name, description, image, category, lessons ,price,creator } = req.body;
 
     // Step 1: সব lesson আলাদা আলাদা save করো
     const savedLessons = await Lesson.insertMany(lessons);
@@ -17,11 +17,33 @@ const addCourse = catchAsync(async (req,res)=>{
     const lessonIds = savedLessons.map(lesson => lesson._id);
 
     // Step 3: Course save করো lessonIds সহ
-    const newCourse = new Course({ name, description, image, category, lessonIds, price });
+    const newCourse = new Course({ name, description, image, category, lessonIds, price,creator });
     await newCourse.save();
     res.status(201).json(newCourse)
     } catch (err) {
         res.status(500).json({ error: err.message });
+    }
+})
+
+const deleteAllCourse = catchAsync(async (req,res)=>{
+    try {
+        // const id = req.params.id;
+
+        const deleted = await Enrolled.findOneAndDelete()
+        res.status(200).json(deleted);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+})
+
+const deleteAllLesson = catchAsync(async (req,res)=>{
+    try {
+        // const id = req.params.id;
+
+        const deleted = await Lesson.deleteMany({})
+        res.status(200).json(deleted);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
     }
 })
 
@@ -67,5 +89,7 @@ export const courseService = {
     getCourse,
     getAllCourse,
     getSingleCourse,
-    getLesson
+    getLesson,
+    deleteAllCourse,
+    deleteAllLesson
 }

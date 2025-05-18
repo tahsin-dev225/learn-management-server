@@ -7,5 +7,6 @@ const router = Router()
 
 router.post('/', validationMiddleware(commentValidation.commentSchema), commentService.addComment)
 router.get('/:id',  commentService.getComment)
+router.delete('/',  commentService.deleteAllComment)
 
 export const commentRouter = router;

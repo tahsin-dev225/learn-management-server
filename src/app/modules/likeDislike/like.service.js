@@ -135,6 +135,17 @@ const removeDislike = catchAsync(async (req,res)=>{
 })
 
 
+const deleteAllLike = catchAsync(async (req,res)=>{
+    try {
+        // const id = req.params.id;
+
+        const deleted = await Like.deleteMany({})
+        res.status(200).json(deleted);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+})
+
 export const likeService = {
     addLike,
     addDislike,
@@ -143,5 +154,6 @@ export const likeService = {
     getDislike,
     getAllDislike,
     removeLike,
-    removeDislike
+    removeDislike,
+    deleteAllLike,
 }
