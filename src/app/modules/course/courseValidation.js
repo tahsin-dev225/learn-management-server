@@ -13,7 +13,6 @@ const lessonSchema = z.object({
     image: z.string().url({ message: "Image must be a valid URL" }),
     category: z.string().min(1, { message: "Category is required" }),
     price: z.coerce.number().min(1, { message: "Price must be at least 1" }),
-    lessons: z.array(lessonSchema).nonempty({ message: "At least one lesson is required" }),
     creator : z.string().min(1, { message: "Creator is required" })
   });
   

@@ -9,7 +9,7 @@ const PORT = process.env.PORT || 5000;
 
 app.use(
     cors({
-      origin: ["https://learn-management-frontend.vercel.app"
+      origin: ["https://learn-management-frontend.vercel.app",
         
       ],
       credentials: true,

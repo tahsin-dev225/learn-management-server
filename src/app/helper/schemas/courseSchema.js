@@ -23,16 +23,10 @@ const courseSchema = new mongoose.Schema({
         default : 0,
         required : true
     },
-    lessonIds: [ 
-        {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "Lesson"
-        }
-      ],
     creator : {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
-      }
+    }
 })
 
 export default courseSchema;

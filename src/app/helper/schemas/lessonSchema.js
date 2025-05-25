@@ -9,8 +9,9 @@ const lessonSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  id: {
-    type: Number,
+  courseId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref : 'Course',
     required: true
   },
 }, {
