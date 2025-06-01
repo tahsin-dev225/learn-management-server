@@ -11,6 +11,7 @@ app.use(
     cors({
       origin: ["https://learn-management-frontend.vercel.app",
         
+        "http://localhost:3000"
       ],
       credentials: true,
     })

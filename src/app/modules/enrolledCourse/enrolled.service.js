@@ -302,6 +302,48 @@ const getLast3CourseProgress = catchAsync(async (req, res) => {
 });
 
 
+const getPopularEnrolled = catchAsync(async(req,res)=>{
+    try {
+        const result = await Enrolled.aggregate([
+      {
+        $group: {
+          _id: "$courseId",           // courseId অনুযায়ী group
+          totalEnrolled: { $sum: 1 }  // প্রতিটা এনরোলমেন্ট গণনা
+        }
+      },
+      { $sort: { totalEnrolled: -1 } }, // descending order
+      { $limit: 3 },                    // Top 3 course
+      {
+        $lookup: {
+          from: "courses",              // course collection name (lowercase plural)
+          localField: "_id",            // _id here is courseId
+          foreignField: "_id",          // Course._id
+          as: "course"
+        }
+      },
+      { $unwind: "$course" },           // course array → object
+      {
+        $project: {
+          _id: 0,
+          courseId: "$_id",
+          totalEnrolled: 1,
+          title: "$course.title",
+          price: "$course.price",
+          name: "$course.name",
+          category: "$course.category",
+          image: "$course.image",
+          description: "$course.description"
+          // Course model-এ যেসব field আছে সেগুলো include করো
+        }
+      }
+    ]);
+
+        res.status(200).json(result)
+    } catch (err) {
+        console.error("Error:", err);
+    }
+})
+
 // const deleteEnrolled = catchAsync(async (req,res)=>{
 //     try {
 //         const id = req.params.id;
@@ -324,5 +366,6 @@ export const enrolledService = {
     getTotalEarning,
     addViewedLesson,
     getLast3CourseProgress,
-    getProgressData
+    getProgressData,
+    getPopularEnrolled
 }
